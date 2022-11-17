@@ -1,0 +1,151 @@
+_schema-version: "3.1"
+ID: ExtUserReg
+description: Extenal User Registration
+version: 1.0.0
+modules:
+- name: FrontendBuilder
+  type: html5
+  path: frontend
+  build-parameters:
+    build-result: ../app/pages
+    builder: custom
+    commands:
+    - rm -rf ../app/pages # delete old artefacts 
+    - npm run build
+    supported-platforms: []
+- name: ExtUserReg-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: ExtUserReg-service-uaa
+  - name: ExtUserReg-service-db
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+    ignore:
+    - node_modules
+    - package-lock.json
+- name: ExtUserReg-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: ExtUserReg-service-uaa
+  - name: ExtUserReg-service-db
+  - name: ExtUserReg-service-destination
+  - name: ExtUserReg-service-connectivity
+  - name: ExtUserReg-service-logs
+  - name: ExtUserReg-service-workflow
+  - name: ExtUserReg-service-apiaccess
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    memory: 256MB
+  build-parameters:
+    builder: npm
+    ignore:
+    - node_modules
+    - package-lock.json
+- name: ExtUserReg-aux-destinations
+  type: com.sap.application.content
+  requires:
+  - name: ExtUserReg-service-uaa
+    parameters:
+      service-key:
+        name: ExtUserReg-uaa-key
+  - name: srv-api
+  - name: ExtUserReg-service-destination
+    parameters:
+      content-target: true
+  parameters:
+    content:
+      subaccount:
+        destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: ExtUserReg-service-uaa
+          ServiceInstanceName: ExtUserReg-uaa
+          ServiceKeyName: ExtUserReg-uaa-key
+          sap.cloud.service: lcap.ExtUserReg
+        - Authentication: OAuth2ClientCredentials
+          Name: ExtUserReg-app-srv
+          TokenServiceInstanceName: ExtUserReg-uaa
+          TokenServiceKeyName: ExtUserReg-uaa-key
+          URL: ~{srv-api/srv-url}
+          sap.cloud.service: lcap.ExtUserReg
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: workflow-module
+  type: com.sap.application.content
+  path: workflow/workflow-module
+  requires:
+  - name: ExtUserReg-service-workflow  
+    parameters:
+      content-target: true
+- name: ExtUserReg # Approuter configuration
+  type: approuter.nodejs
+  path: app/ # from cds.env.folders. Consider also cds.env.build.target --> gen/app
+  parameters:
+    keep-existing-routes: true
+    disk-quota: 256M
+    memory: 256M
+  properties:
+    XS_APP_LOG_LEVEL: debug # please disable in production
+  requires:
+    - name: ExtUserReg-service-uaa
+    - name: ExtUserReg-service-destination
+resources:
+- name: ExtUserReg-service-uaa
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      role-collections: []
+      xsappname: ExtUserReg-${space}
+    path: xs-security.json
+    service: xsuaa
+    service-name: ExtUserReg-uaa
+    service-plan: application
+- name: ExtUserReg-service-apiaccess
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: xsuaa
+    service-name: ExtUserReg-service-apiaccess
+    service-plan: apiaccess
+    service-key: 
+      - name: ExtUserReg-service-apiaccess-key
+- name: ExtUserReg-service-workflow
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./wf-config.json
+    service: workflow
+    service-name: ExtUserReg-workflow
+    service-plan: standard
+- name: ExtUserReg-service-db
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: hana
+    service-name: ExtUserReg-db
+    service-plan: hdi-shared
+- name: ExtUserReg-service-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: ExtUserReg-destination
+    service-plan: lite
+- name: ExtUserReg-service-connectivity
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: connectivity
+    service-name: ExtUserReg-connectivity
+    service-plan: lite
+- name: ExtUserReg-service-logs
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: application-logs
+    service-name: ExtUserReg-logs
+    service-plan: lite

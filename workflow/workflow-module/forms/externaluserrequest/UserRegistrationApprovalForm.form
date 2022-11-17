@@ -1,0 +1,99 @@
+{
+    "id": "userregistrationapprovalform",
+    "schemaVersion": "1.1.0",
+    "name": "UserRegistrationApprovalForm",
+    "revision": "1.0",
+    "type": "task",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "RequestData",
+            "type": "section",
+            "title": "Request Data",
+            "content": [
+                {
+                    "id": "CompanyName",
+                    "type": "string",
+                    "label": "Company Name",
+                    "readOnly": false,
+                    "value": "${context.CompanyName}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "Firstname",
+                    "type": "string",
+                    "label": "Firstname",
+                    "readOnly": false,
+                    "value": "${context.Firstname}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "Lastname",
+                    "type": "string",
+                    "label": "Lastname",
+                    "readOnly": false,
+                    "value": "${context.Lastname}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "Email",
+                    "type": "string",
+                    "label": "Email",
+                    "readOnly": false,
+                    "value": "${context.Email}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "Reason",
+                    "type": "string",
+                    "label": "Reason",
+                    "readOnly": true,
+                    "value": "${context.Reason}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "RegistrationDate",
+                    "type": "datetime",
+                    "label": "Registration Date",
+                    "readOnly": true,
+                    "value": "${context.RegistrationDate}",
+                    "constraints": {
+                        "required": false
+                    }
+                },
+                {
+                    "id": "ID",
+                    "type": "string",
+                    "label": "ID",
+                    "readOnly": true,
+                    "value": "${context.ID}",
+                    "constraints": {
+                        "required": false
+                    }
+                }
+            ]
+        }
+    ],
+    "decisions": [
+        {
+            "id": "approve",
+            "text": "Approve",
+            "decisionType": "positive"
+        },
+        {
+            "id": "reject",
+            "text": "Reject",
+            "decisionType": "negative"
+        }
+    ]
+}

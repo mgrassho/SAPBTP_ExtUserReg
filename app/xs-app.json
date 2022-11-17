@@ -1,0 +1,24 @@
+{
+  "welcomeFile": "/pages/",
+  "authenticationMethod": "route",
+  "routes": [ 
+    {
+      "source": "^/service/ExtUserReg(.*)$",
+      "target": "service/ExtUserReg$1",
+      "destination": "ExtUserReg-app-srv",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/assets(.*)$",
+      "target": "$1",
+      "localDir": "pages/assets",
+      "authenticationType": "none"
+    },
+    {
+      "source": "^/pages/(.*)$",
+      "target": "$1",
+      "localDir": "pages",
+      "authenticationType": "none"
+    }
+  ]
+}
