@@ -3,6 +3,7 @@ SPDX-FileCopyrightText: 2022 Martin Grasshoff https://github.com/mgrassho
 
 SPDX-License-Identifier: Apache-2.0
 -->
+[![REUSE status](https://api.reuse.software/badge/github.com/mgrassho/SAPBTP_ExtUserReg)](https://api.reuse.software/info/github.com/mgrassho/SAPBTP_ExtUserReg)
 
 # SAP BTP External User Registration
 
