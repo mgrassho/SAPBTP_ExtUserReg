@@ -424,3 +424,7 @@ The full mtar deployment can take several minutes (~3min), while the frontend mo
 * Very useful REST Workflow Guide/Blog [Link](https://blogs.sap.com/2021/02/24/exploring-btp-workflow-service-apis-with-a-sample-application/)
 
 * Very good blog about SAP Application Router [Link](https://blogs.sap.com/2020/04/03/sap-application-router/)
+
+## License
+
+Copyright (c) 2021 Martin Grasshoff. All rights reserved. This project is licensed under the Apache Software License, version 2.0 except as noted otherwise in the [LICENSE](LICENSES/Apache-2.0.txt) file.
