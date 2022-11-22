@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2022 Martin Grasshoff https://github.com/mgrassho
+
+SPDX-License-Identifier: Apache-2.0
+-->
+
 # SAP BTP External User Registration
 
 Showcase on how to implement external user registration end to end

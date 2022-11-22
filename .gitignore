@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 Martin Grasshoff https://github.com/mgrassho
+#
+# SPDX-License-Identifier: Apache-2.0
+
 # Logs
 logs
 *.log
