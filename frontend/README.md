@@ -23,9 +23,14 @@ If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has a
     2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
 2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
 
-## Customize configuration
 
+## Testing
 
-```sh
-npm run dev
-```
+According to the vue home page, cypress [https://cypress.io](cypress.io) is recommended as testing framework for vue applications.
+
+Adding cypress to the project was very comfortable and is described here:
+[https://docs.cypress.io/guides/component-testing/vue/overview](cypress.io).
+
+After starting cypress you need an assistent offers you to configure your project. It automatically detects whether your project uses Typescript or not and provides the needed configuration.
+
+Afterwards, you can add your test to the project.

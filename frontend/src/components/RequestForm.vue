@@ -64,7 +64,7 @@ async function createRequest() {
     <div><input v-model="Firstname" id="Firstname" /></div>
 
     <div class="label">Lastname</div>
-    <div><input v-model="Lastname" id="Firstname" /></div>
+    <div><input v-model="Lastname" id="Lastname" /></div>
 
     <div class="label">Email</div>
     <div><input v-model="Email" id="Email" /></div>
